@@ -118,17 +118,3 @@ def get_next_page(soup):
        return link.replace(";", "&")
 
     else: return None
-
-links = ["https://www.skoob.com.br/livro/resenhas/722140/edicao:724047/","https://www.skoob.com.br/livro/resenhas/693/edicao:56597/","https://www.skoob.com.br/livro/resenhas/108/edicao:323291/","https://www.skoob.com.br/livro/resenhas/247555/edicao:277187/","https://www.skoob.com.br/livro/resenhas/357/edicao:476/","https://www.skoob.com.br/livro/resenhas/244722/edicao:273951/","https://www.skoob.com.br/livro/resenhas/49/edicao:356977/","https://www.skoob.com.br/livro/resenhas/57/edicao:77/","https://www.skoob.com.br/livro/resenhas/248/edicao:347/","https://www.skoob.com.br/livro/resenhas/175390/edicao:195445/","https://www.skoob.com.br/livro/resenhas/7/edicao:268782/","https://www.skoob.com.br/livro/resenhas/359/edicao:479/","https://www.skoob.com.br/livro/resenhas/48/edicao:103570/","https://www.skoob.com.br/livro/resenhas/567/edicao:45999/","https://www.skoob.com.br/livro/resenhas/180/edicao:247/","https://www.skoob.com.br/livro/resenhas/106468/edicao:118175/","https://www.skoob.com.br/livro/resenhas/650821/edicao:652991/","https://www.skoob.com.br/livro/resenhas/797/edicao:1035/","https://www.skoob.com.br/livro/resenhas/975/edicao:38519/","https://www.skoob.com.br/livro/resenhas/331/edicao:195738/","https://www.skoob.com.br/livro/resenhas/650821/edicao:652991/","https://www.skoob.com.br/livro/resenhas/2/edicao:3/","https://www.skoob.com.br/livro/resenhas/95748/edicao:105919/"]
-diretorio = ["Nova pasta1/books_pt_neg_skoob", "Nova pasta1/books_pt_pos_skoob"]
-for i in links:
-    i = i + "mpage:1"
-    try:
-        lista_pos, lista_neg = get_reviews(i)
-    except:
-        save_list(lista_neg, diretorio[0]+"BACKUP")
-        save_list(lista_pos, diretorio[1]+"BACKUP")
-
-    save_list(lista_neg, diretorio[0])
-    save_list(lista_pos, diretorio[1])
-    print("***")
