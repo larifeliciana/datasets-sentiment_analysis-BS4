@@ -1,12 +1,8 @@
-#import webbrowser
-
-#webbrowser.open("https://www.amazon.com.br/revolu%C3%A7%C3%A3o-dos-bichos-conto-fadas/product-reviews/8535909559/")
 import bs4
+import time
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-
-
 
 def get_soup(url):
     session = requests.Session()
@@ -19,11 +15,9 @@ def get_soup(url):
     soup = bs4.BeautifulSoup(res.text)
     return soup
 
-
 def get(type, url):
 
     soup = get_soup(url)
-#    link = get_type(type, soup)
     link = url
     if link!= None:
         lista = get_reviews(link)
@@ -31,21 +25,16 @@ def get(type, url):
 
     return lista
 
-
-
-
 def save_list(lista,endereco):
     arq = open(endereco, 'a', encoding="utf-8")
     if lista != None:
         for i in lista:
                 arq.writelines(i+"\n")
 
-
-
 def get_reviews(url):
 
     soup = get_soup(url)
-    elemento = str(soup.find_all(class_="a-size-base review-text")).replace("<br/><br/>", " ").replace("<br/>", " ").replace("</span>,", "").replace("[","").replace("</span>", "").replace("]","")
+    elemento = str(soup.find_all(class_="a-size-base review-text"))
     lista = elemento.split("<span class=\"a-size-base review-text\" data-hook=\"review-body\">")
     url = get_next_page(soup)
 
@@ -79,7 +68,6 @@ def get_type(type, soup): #pos or neg
 def get_next_page(soup):
 
     x = soup.find_all(class_="a-last")
-
     try:
         link = "https://www.amazon.com.br" + str(x).split("\"")[3]
         link = link.split('?')
@@ -87,27 +75,19 @@ def get_next_page(soup):
         link = link[0]+"/ref=cm_cr_arp_d_paging_btm_next_"+num[1]+"?"+link[1]
     except:
         if "Our servers are getting hit pretty " not in str(x):
-            print("acabou")
-            print(x)
             link = None
         else:
-            print("cansou")
-            for i in range(1000000):
-                x = soup.find_all(class_="a-last")
-            print("descançou")
+            time.sleep(4)
+            x = soup.find_all(class_="a-last")
             try:
                 link = "https://www.amazon.com.br" + str(x).split("\"")[3]
                 link = link.split('?')
                 num = link[1].split('=')
                 link = link[0] + "/ref=cm_cr_arp_d_paging_btm_next_" + num[1] + "?" + link[1]
             except:
-                print("acabou mesmo")
-                print(x)
                 link = None
     if link != "https://www.amazon.com.bra-letter-space" and link != None:
+        link = link.replace(";", "&")
 
-        z = link.replace(";", "&")
-
-        return z
+        return link
     else: return None
-

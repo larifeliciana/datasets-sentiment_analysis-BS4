@@ -1,8 +1,8 @@
-    import requests
+import requests
 
-    from requests.adapters import HTTPAdapter
-    from urllib3.util.retry import Retry
-    import json
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+import json
 
 def get_soup(url):
     session = requests.Session()
@@ -16,7 +16,8 @@ def get_soup(url):
     return res.text
 
 def get_reviews(appid, offset, page,language, type):
-    url = "https://store.steampowered.com/appreviews/"+appid+"?json=1&day_range=223372036854775807&num_per_page="+page+"&l=brazilian&review_type="+type
+    url = (f"https://store.steampowered.com/appreviews/{appid}?json=1&day_range=
+            223372036854775807&num_per_page="+page+"&l=brazilian&review_type={type}")
     try:
         print(url)
         x = get_soup(url)
@@ -53,5 +54,3 @@ for i in ids:
 save_list(pos, "pos_steam")
 save_list(neg, "neg_steam")
 
-
-#https://store.steampowered.com/appreviews/570?json=1&num_per_page=100&review_type=negative&filter=recent
